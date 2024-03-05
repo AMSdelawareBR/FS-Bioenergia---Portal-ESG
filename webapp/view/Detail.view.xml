@@ -1,0 +1,6 @@
+<mvc:View controllerName="br.agr.fs.esgsurvey.controller.Detail" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc"
+	xmlns:fb="sap.ui.comp.filterbar" xmlns:l="sap.ui.layout" xmlns:semantic="sap.m.semantic" xmlns:core="sap.ui.core">
+	<semantic:DetailPage id="page" title="{i18n>appTitle}"  navButtonPress="onNavBack" showNavButton="{device>/system/phone}" showFooter="false" >
+        
+	</semantic:DetailPage>
+</mvc:View>

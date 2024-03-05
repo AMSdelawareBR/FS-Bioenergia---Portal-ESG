@@ -1,0 +1,197 @@
+{
+    "_version": "1.59.0",
+    "sap.app": {
+        "id": "br.agr.fs.esgsurvey",
+        "type": "application",
+        "i18n": "i18n/i18n.properties",
+        "applicationVersion": {
+            "version": "0.0.1"
+        },
+        "title": "{{appTitle}}",
+        "description": "{{appDescription}}",
+        "resources": "resources.json",
+        "sourceTemplate": {
+            "id": "@sap/generator-fiori:basic",
+            "version": "1.12.4",
+            "toolsId": "d60d64df-7b2d-49d6-95c4-e0279e288ec4"
+        },
+        "dataSources": {
+            "ZGW_GEN_ESG_PORTAL_SRV": {
+              "uri": "/sap/opu/odata/sap/ZGW_GEN_ESG_PORTAL_SRV/",
+              "type": "OData",
+              "settings": {
+                "annotations": [],
+                "localUri": "localService/metadata.xml",
+                "odataVersion": "2.0"
+              }
+            }
+        }        
+    },
+    "sap.ui": {
+        "technology": "UI5",
+        "icons": {
+            "icon": "",
+            "favIcon": "",
+            "phone": "",
+            "phone@2": "",
+            "tablet": "",
+            "tablet@2": ""
+        },
+        "deviceTypes": {
+            "desktop": true,
+            "tablet": true,
+            "phone": true
+        }
+    },
+    "sap.ui5": {
+        "flexEnabled": false,
+        "dependencies": {
+            "minUI5Version": "1.120.9",
+            "libs": {
+                "sap.m": {},
+                "sap.ui.core": {},
+                "sap.f": {},
+                "sap.suite.ui.generic.template": {},
+                "sap.ui.comp": {},
+                "sap.ui.generic.app": {},
+                "sap.ui.table": {},
+                "sap.ushell": {}
+            }
+        },
+        "contentDensities": {
+            "compact": true,
+            "cozy": true
+        },
+        "models": {
+            "i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "settings": {
+                    "bundleName": "br.agr.fs.esgsurvey.i18n.i18n"
+                }
+            },
+			"": {
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"settings": {
+					"defaultOperationMode": "Server",
+					"defaultBindingMode": "OneWay",
+					"defaultCountMode": "Request"
+				},
+				"dataSource": "ZGW_GEN_ESG_PORTAL_SRV",
+				"preload": true
+			},            
+			"questionView": {
+				"type": "sap.ui.model.json.JSONModel"
+			}
+        },
+        "resources": {
+            "css": [
+                {
+                    "uri": "css/style.css"
+                }
+            ]
+        },
+        "routing": {
+            "config": {
+				"routerClass": "sap.m.routing.Router",
+				"path": "br.agr.fs.esgsurvey.view",
+				"controlId": "idAppControl",
+				"type": "View",
+				"viewType": "XML",
+				"async": true
+            },
+            "routes": [
+				{
+					"pattern": "",
+					"name": "master",
+					"target": [
+						"master"
+					]
+				},
+                {
+                    "pattern": "Quiz",
+					"name": "quiz",
+					"target": [						
+						"master",
+                        "quiz"
+					]                    
+                },
+                {
+                    "pattern": "Quiz(:quizId:,:quizVersion:)",
+					"name": "quizItem",
+					"target": [						
+						"master",
+                        "quizitem"
+					]                    
+                },                
+                {
+                    "pattern": "Question",
+					"name": "question",
+					"target": [						
+						"master",
+                        "question"
+					]                    
+                },                
+                {
+                    "pattern": "Question(:questionId:)",
+					"name": "questionItem",
+					"target": [						
+						"master",
+                        "questionItem"
+					]                    
+                }
+            ],
+			"targets": {
+				"master": {
+					"viewName": "Master",
+					"viewLevel": 0,
+					"viewId": "master",
+					"controlAggregation": "masterPages"
+				},
+				"detail": {
+					"viewName": "Detail",
+					"viewId": "detail",
+                    "controlAggregation": "detailPages",
+					"viewLevel": 1
+				},
+				"quiz": {
+					"viewName": "Quiz",
+					"viewId": "quiz",
+                    "controlAggregation": "detailPages",
+					"viewLevel": 1
+				},      
+                "quizitem": {
+					"viewName": "QuizItem",
+					"viewId": "quizitem",
+                    "controlAggregation": "detailPages",
+					"viewLevel": 1
+				},                
+                "question": {
+					"viewName": "Question",
+					"viewId": "question",
+                    "controlAggregation": "detailPages",
+					"viewLevel": 1
+				},   
+                "questionItem": {
+					"viewName": "QuestionItem",
+					"viewId": "questionItem",
+                    "controlAggregation": "detailPages",
+					"viewLevel": 1
+				},                          
+				"empty": {
+					"viewName": "Empty",
+					"viewId": "Empty"
+				}
+			}
+        },
+        "rootView": {
+            "viewName": "br.agr.fs.esgsurvey.view.App",
+            "type": "XML",
+            "async": true,
+            "id": "App"
+        }
+    },
+    "sap.cloud": {
+        "public": true,
+        "service": "bragrfsesgsurvey"
+    }
+}
