@@ -25,7 +25,20 @@
                 "odataVersion": "2.0"
               }
             }
-        }        
+        },
+        "crossNavigation": {
+            "inbounds": {
+                "esgsurvey-maintain": {
+                    "semanticObject": "esgsurvey",
+                    "action": "maintain",
+                    "title": "{{flpTitle}}",
+                    "signature": {
+                        "parameters": {},
+                        "additionalParameters": "allowed"
+                    }
+                }
+            }
+        }     
     },
     "sap.ui": {
         "technology": "UI5",
@@ -78,10 +91,16 @@
 				},
 				"dataSource": "ZGW_GEN_ESG_PORTAL_SRV",
 				"preload": true
-			},            
+			},    
+			"appView": {
+				"type": "sap.ui.model.json.JSONModel"
+			},               
 			"questionView": {
 				"type": "sap.ui.model.json.JSONModel"
-			}
+			},
+            "questionEdit":{
+                "type": "sap.ui.model.json.JSONModel"
+            }
         },
         "resources": {
             "css": [

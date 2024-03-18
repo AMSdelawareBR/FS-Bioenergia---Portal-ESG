@@ -2,103 +2,95 @@
 	xmlns:semantic="sap.m.semantic" xmlns="sap.m" xmlns:tnt="sap.tnt" xmlns:core="sap.ui.core">
 	<semantic:DetailPage id="page" title="{i18n>questions}" showFooter="false">
 		<semantic:content>
-            <Table id="idProductsTable"
+            <Table id="idQuestionTable"
             inset="true"
             items="{
-                path: '/ProductCollection',
-                sorter: {
-                    path: 'Name'
-                }
+                path: '/ZC_GEN_PERGUNTAS'
             }">
             <headerToolbar>
                 <OverflowToolbar>
                     <content>
-                        <Title text="Products" level="H2"/>
                         <ToolbarSpacer />
-                        <ComboBox id="idPopinLayout"
-                            placeholder="Popin layout options"
-                            change="onPopinLayoutChanged">
-                            <items>
-                                <core:Item  text="Block"
-                                    key="Block"/>
-                                <core:Item  text="Grid Large"
-                                    key="GridLarge"/>
-                                <core:Item  text="Grid Small"
-                                    key="GridSmall"/>
-                            </items>
-                        </ComboBox>
-                        <Label text="Sticky options:" />
-                        <CheckBox text="ColumnHeaders"
-                            select="onSelect"/>
-                        <CheckBox text="HeaderToolbar"
-                            select="onSelect"/>
-                        <CheckBox text="InfoToolbar"
-                            select="onSelect"/>
-                        <ToggleButton id="toggleInfoToolbar"
-                            text="Hide/Show InfoToolbar"
-                            press="onToggleInfoToolbar" />
+                        <SearchField id="questionSearch" width="auto" search="onFilterQuestions" />
+                        <Button text="{i18n>create}" press="onQuestionCreate"/>
                     </content>
                 </OverflowToolbar>
             </headerToolbar>
-            <infoToolbar>
-                <OverflowToolbar>
-                    <Label text="Wide range of available products"/>
-                </OverflowToolbar>
-            </infoToolbar>
             <columns>
                 <Column
                     width="12em">
-                    <Text text="Product" />
+                    <Text text="{i18n>identification}" />
                 </Column>
                 <Column
                     minScreenWidth="Tablet"
                     demandPopin="true">
-                    <Text text="Supplier" />
+                    <Text text="{i18n>period}" />
                 </Column>
                 <Column
                     minScreenWidth="Desktop"
-                    demandPopin="true"
-                    hAlign="End">
-                    <Text text="Dimensions" />
+                    demandPopin="true">
+                    <Text text="{i18n>status}" />
                 </Column>
                 <Column
                     minScreenWidth="Desktop"
-                    demandPopin="true"
-                    hAlign="Center">
-                    <Text text="Weight" />
-                </Column>
+                    demandPopin="true">
+                    <Text text="{i18n>createdOn}" />
+                </Column>                
                 <Column
-                    hAlign="End">
-                    <Text text="Price" />
-                </Column>
+                    minScreenWidth="Desktop"
+                    demandPopin="true">
+                    <Text text="{i18n>createdBy}" />
+                </Column>                      
+                <Column
+                    minScreenWidth="Desktop"
+                    demandPopin="true">
+                    <Text text="{i18n>changedOn}" />
+                </Column>                
+                <Column
+                    minScreenWidth="Desktop"
+                    demandPopin="true">
+                    <Text text="{i18n>changedBy}" />
+                </Column>                                                          
             </columns>
             <items>
-                <ColumnListItem vAlign="Middle">
+                <ColumnListItem vAlign="Middle" type="Active" press="onQuestionPress">
                     <cells>
                         <ObjectIdentifier
-                            title="{Name}"
-                            text="{ProductId}"/>
+                            title="{Enunciado}"
+                            text="{
+                                   path: 'Pilar',
+                                   formatter: '.formatter.pillarText'
+                                  }"/>
                         <Text
-                            text="{SupplierName}" />
+                            text="{ path: 'DataInicio', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', UTC: true }} - 
+                                  { path: 'DataFim', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', UTC: true }}" />
                         <Text
-                            text="{Width} x {Depth} x {Height} {DimUnit}" />
-                        <ObjectNumber
-                            number="{WeightMeasure}"
-                            unit="{WeightUnit}"
-                            state="{
-                                parts: [
-                                    {path: 'WeightMeasure'},
-                                    {path: 'WeightUnit'}
-                                ],
-                                formatter: 'sap.m.sample.Table.Formatter.weightState'
-                            }" />
-                        <ObjectNumber
-                                number="{
-                                    parts:[{path:'Price'},{path:'CurrencyCode'}],
-                                    type: 'sap.ui.model.type.Currency',
-                                    formatOptions: {showMeasure: false}
-                                }"
-                                unit="{CurrencyCode}" />
+                            text="{
+                                   path: 'Status',
+                                   formatter: '.formatter.questionStatusText'
+                                  }" />                                     
+                        <Text
+                            text="{
+                                   path: 'CreatedAt',
+                                   type: 'sap.ui.model.type.Date',
+                                   formatOptions: { pattern: 'dd/MM/yyyy', UTC: true }
+                                  }" />
+                        <Text
+                            text="{
+                                   path: 'CreatedBy',
+                                   formatter: '.formatter.questionStatusText'
+                                  }" />
+                        <Text
+                            text="{
+                                   path: 'ChangedAt',
+                                   type: 'sap.ui.model.type.Date',
+                                   formatOptions: { pattern: 'dd/MM/yyyy', UTC: true }
+                                  }" />
+                        <Text
+                            text="{
+                                   path: 'ChangedBy',
+                                   formatter: '.formatter.questionStatusText'
+                                  }" />                                                                                                                                     
                     </cells>
                 </ColumnListItem>
             </items>

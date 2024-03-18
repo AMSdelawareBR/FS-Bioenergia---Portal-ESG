@@ -1,0 +1,105 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:l="sap.ui.layout"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core">
+	<VBox class="sapUiSmallMargin">
+		<f:SimpleForm id="displayQuestion"
+			editable="true"
+			layout="ResponsiveGridLayout"
+			title="{i18n>newQuestion}"
+			labelSpanXL="3"
+			labelSpanL="3"
+			labelSpanM="3"
+			labelSpanS="12"
+			adjustLabelSpan="false"
+			emptySpanXL="4"
+			emptySpanL="4"
+			emptySpanM="4"
+			emptySpanS="0"
+			columnsXL="1"
+			columnsL="1"
+			columnsM="1"
+			singleContainerFullSize="false" >
+			<f:content>
+				<Label text="{i18n>statement}" required="true"/>
+				<Input id="statementdisplay" value="{questionEdit>/Enunciado}" enabled="false" />
+				<Label text="{i18n>description}" />
+				<TextArea
+				value="{questionEdit>/Descricao}"
+				rows="5" cols="500" enabled="false"/>
+				<Label text="{i18n>pillar}" />
+				<Select id="pillardisplay" selectedKey="{questionEdit>/Pilar}" enabled="false">
+					<items>
+						<core:Item text="{i18n>pillarE}" key="E"/>
+						<core:Item text="{i18n>pillarS}" key="S"/>
+						<core:Item text="{i18n>pillarG}" key="G"/>
+					</items>
+				</Select>		
+				<Label text="{i18n>dateRange}" />		
+				<DateRangeSelection
+					id="quizdaterangedisplay"
+					value= "{
+						'type': 'sap.ui.model.type.DateInterval',
+						'formatOptions': {
+							'pattern': 'dd/MM/yyyy'
+						},
+						'parts': [
+							{
+								'type': 'sap.ui.model.type.Date',
+								'path': 'questionEdit>/DataInicio'
+							},
+							{
+								'type': 'sap.ui.model.type.Date',
+								'path': 'questionEdit>/DataFim'
+							}
+						]
+					}" 	enabled="false"/>				
+			</f:content>
+		</f:SimpleForm>
+		<f:SimpleForm id="responsiblesdisplay"
+			editable="true"
+			layout="ResponsiveGridLayout"
+			title="{i18n>responsible}"
+			labelSpanXL="3"
+			labelSpanL="3"
+			labelSpanM="3"
+			labelSpanS="12"
+			adjustLabelSpan="false"
+			emptySpanXL="4"
+			emptySpanL="4"
+			emptySpanM="4"
+			emptySpanS="0"
+			columnsXL="1"
+			columnsL="1"
+			columnsM="1"
+			singleContainerFullSize="false" >
+			<f:content>
+				<Label text="{i18n>responsible}" required="true"/> 
+				<MultiInput id="responsibleinputdisplay" showSuggestion="false" showValueHelp="false" enabled="false"/>				
+			</f:content>
+		</f:SimpleForm>	
+		<f:SimpleForm id="approversdisplay"
+			editable="true"
+			layout="ResponsiveGridLayout"
+			title="Aprovação"
+			labelSpanXL="3"
+			labelSpanL="3"
+			labelSpanM="3"
+			labelSpanS="12"
+			adjustLabelSpan="false"
+			emptySpanXL="4"
+			emptySpanL="4"
+			emptySpanM="4"
+			emptySpanS="0"
+			columnsXL="1"
+			columnsL="1"
+			columnsM="1"
+			singleContainerFullSize="false" >
+			<f:content>
+				<Label text="{i18n>approvers}" required="true"/> 
+				<MultiInput id="approversinputdisplay" showSuggestion="false" showValueHelp="false" enabled="false"/>				
+			</f:content>
+		</f:SimpleForm>				
+	</VBox>
+</core:FragmentDefinition>

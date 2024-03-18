@@ -5,11 +5,14 @@ sap.ui.define([
 	"sap/m/GroupHeaderListItem",
 	"sap/ui/core/routing/History",
 	"sap/ui/Device",
-	"sap/m/MessageBox"
-], function(BaseController, UIComponent, JSONModel, GroupHeaderListItem, History, Device, MessageBox) {
+	"sap/m/MessageBox",
+	"br/agr/fs/esgsurvey/model/formatter"
+], function(BaseController, UIComponent, JSONModel, GroupHeaderListItem, History, Device, MessageBox, formatter) {
 	"use strict";
 
 	return BaseController.extend("br.agr.fs.esgsurvey.controller.Quiz", {
+
+		formatter: formatter,
 		/**
 		 * Controller Initialization
 		 * @private

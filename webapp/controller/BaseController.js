@@ -68,15 +68,26 @@ sap.ui.define([
 		 * @public
 		 */
 		onNavBack: function() {
-			var sPreviousHash = History.getInstance().getPreviousHash(),
-				oCrossAppNavigator = sap.ushell.Container.getService("CrossApplicationNavigation");
+			const oHistory = History.getInstance();
+			const sPreviousHash = oHistory.getPreviousHash();
 
-			if (sPreviousHash !== undefined || !oCrossAppNavigator.isInitialNavigation()) {
-				this._findSplitApp(this.getView()).backMaster();
+			if (sPreviousHash !== undefined) {
+				window.history.go(-1);
 			} else {
-				this.getRouter().navTo("master", {}, true);
+				const oRouter = this.getOwnerComponent().getRouter();
+				oRouter.navTo("master", {}, true);
 			}
-		}
+		},
+
+		/**
+		 * Sets Busy App
+		 * @public
+		 * @param {boolean} bBusy App State
+		 */
+		setAppBusy: function (bBusy) {
+			this.getModel("appView").setProperty("/busy", bBusy);
+			this.getModel("appView").refresh(true);
+		}		
 
 	});
 
