@@ -1,0 +1,23 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<SelectDialog
+		id="questionSelectDialog"
+		title="{i18n>selectQuestion}"
+		search=".onQuestionSearch"
+		confirm=".onQuestionDialogClose"
+		cancel=".onQuestionDialogClose"
+		multiSelect="true"
+		items="{
+			path: '/ZC_GEN_PERGUNTAS'
+		}">
+		<StandardListItem
+			title="{Descricao}"
+			description="{ path: 'Pilar',
+                           formatter: '.formatter.pillarText'
+                         }"
+			iconDensityAware="false"
+			iconInset="false"
+			type="Active" />
+	</SelectDialog>
+</core:FragmentDefinition>

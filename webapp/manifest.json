@@ -100,7 +100,13 @@
 			},
             "questionEdit":{
                 "type": "sap.ui.model.json.JSONModel"
-            }
+            },
+			"quizView": {
+				"type": "sap.ui.model.json.JSONModel"
+			},
+            "quizEdit":{
+                "type": "sap.ui.model.json.JSONModel"
+            }                     
         },
         "resources": {
             "css": [

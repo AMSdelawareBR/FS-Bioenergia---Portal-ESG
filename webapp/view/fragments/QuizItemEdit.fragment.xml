@@ -4,10 +4,10 @@
 	xmlns:f="sap.ui.layout.form"
 	xmlns:core="sap.ui.core">
 	<VBox class="sapUiSmallMargin">
-		<f:SimpleForm id="newQuestion"
+		<f:SimpleForm id="newQuiz"
 			editable="true"
 			layout="ResponsiveGridLayout"
-			title="{i18n>newQuestion}"
+			title="{i18n>newQuiz}"
 			labelSpanXL="3"
 			labelSpanL="3"
 			labelSpanM="3"
@@ -22,27 +22,20 @@
 			columnsM="1"
 			singleContainerFullSize="false" >
 			<f:content>
-				<Label text="{i18n>statement}" required="true"/>
-				<Input id="statement" value="{questionEdit>/Enunciado}" />
+				<Label text="{i18n>version}" required="true"/>
+				<Input id="version" value="{questionEdit>/Version}" type="Number" maxLength="4" />
 				<Label text="{i18n>description}" />
 				<TextArea
 				value="{questionEdit>/Descricao}"
-				rows="5" cols="500"/>
-				<Label text="{i18n>pillar}" />
-				<Select id="pillar" selectedKey="{questionEdit>/Pilar}">
-					<items>
-						<core:Item text="{i18n>pillarE}" key="E"/>
-						<core:Item text="{i18n>pillarS}" key="S"/>
-						<core:Item text="{i18n>pillarG}" key="G"/>
-					</items>
-				</Select>		
+				rows="5" cols="500"/>				
 				<Label text="{i18n>dateRange}" />		
 				<DateRangeSelection
 					id="quizdaterange"
 					value= "{
 						'type': 'sap.ui.model.type.DateInterval',
 						'formatOptions': {
-							'pattern': 'dd/MM/yyyy'
+							'pattern': 'dd/MM/yyyy',
+							'UTC': 'true'
 						},
 						'parts': [
 							{
@@ -54,52 +47,101 @@
 								'path': 'questionEdit>/DataFim'
 							}
 						]
-					}" 	change="handleChange"/>				
+					}"/>				
 			</f:content>
 		</f:SimpleForm>
-		<f:SimpleForm id="responsibles"
-			editable="true"
-			layout="ResponsiveGridLayout"
-			title="{i18n>responsible}"
-			labelSpanXL="3"
-			labelSpanL="3"
-			labelSpanM="3"
-			labelSpanS="12"
-			adjustLabelSpan="false"
-			emptySpanXL="4"
-			emptySpanL="4"
-			emptySpanM="4"
-			emptySpanS="0"
-			columnsXL="1"
-			columnsL="1"
-			columnsM="1"
-			singleContainerFullSize="false" >
-			<f:content>
-				<Label text="{i18n>responsible}" required="true"/> 
-				<MultiInput id="responsibleinput" showSuggestion="false" showValueHelp="false"/>				
-			</f:content>
-		</f:SimpleForm>	
-		<f:SimpleForm id="approvers"
-			editable="true"
-			layout="ResponsiveGridLayout"
-			title="Aprovação"
-			labelSpanXL="3"
-			labelSpanL="3"
-			labelSpanM="3"
-			labelSpanS="12"
-			adjustLabelSpan="false"
-			emptySpanXL="4"
-			emptySpanL="4"
-			emptySpanM="4"
-			emptySpanS="0"
-			columnsXL="1"
-			columnsL="1"
-			columnsM="1"
-			singleContainerFullSize="false" >
-			<f:content>
-				<Label text="{i18n>approvers}" required="true"/> 
-				<MultiInput id="approversinput" showSuggestion="false" showValueHelp="false"/>				
-			</f:content>
-		</f:SimpleForm>				
+
+		<Panel width="auto" accessibleRole="Region">
+			<headerToolbar>
+				<OverflowToolbar>
+					<Title text="{i18n>questions}"/>
+				</OverflowToolbar>
+			</headerToolbar>
+			<content>
+				<Table id="idQuestionAddTable"
+							inset="true"
+							items="{
+								path: 'questionEdit>/_Perguntas'
+							}">
+							<headerToolbar>
+								<OverflowToolbar>
+									<content>
+										<ToolbarSpacer />
+										<Button text="{i18n>add}" press="onQuestionAdd"/>
+									</content>
+								</OverflowToolbar>
+							</headerToolbar>
+							<columns>
+								<Column
+									width="12em">
+									<Text text="{i18n>identification}" />
+								</Column>
+								<Column
+									minScreenWidth="Tablet"
+									demandPopin="true">
+									<Text text="{i18n>period}" />
+								</Column>
+								<Column
+									minScreenWidth="Desktop"
+									demandPopin="true">
+									<Text text="{i18n>createdOn}" />
+								</Column>                
+								<Column
+									minScreenWidth="Desktop"
+									demandPopin="true">
+									<Text text="{i18n>createdBy}" />
+								</Column>                      
+								<Column
+									minScreenWidth="Desktop"
+									demandPopin="true">
+									<Text text="{i18n>changedOn}" />
+								</Column>                
+								<Column
+									minScreenWidth="Desktop"
+									demandPopin="true">
+									<Text text="{i18n>changedBy}" />
+								</Column>                                                          
+							</columns>
+							<items>
+								<ColumnListItem vAlign="Middle">
+									<cells>
+										<ObjectIdentifier
+											title="{questionEdit>Enunciado}"
+											text="{
+												path: 'questionEdit>Pilar',
+												formatter: '.formatter.pillarText'
+												}"/>
+										<Text
+											text="{ path: 'questionEdit>DataInicio', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', UTC: true }} - 
+												{ path: 'questionEdit>DataFim', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy', UTC: true }}" />
+										<Text
+											text="{
+												path: 'questionEdit>CreatedAt',
+												type: 'sap.ui.model.type.Date',
+												formatOptions: { pattern: 'dd/MM/yyyy', UTC: true }
+												}" />
+										<Text
+											text="{
+												path: 'questionEdit>CreatedBy',
+												formatter: '.formatter.questionStatusText'
+												}" />
+										<Text
+											text="{
+												path: 'questionEdit>ChangedAt',
+												type: 'sap.ui.model.type.Date',
+												formatOptions: { pattern: 'dd/MM/yyyy', UTC: true }
+												}" />
+										<Text
+											text="{
+												path: 'questionEdit>ChangedBy',
+												formatter: '.formatter.questionStatusText'
+												}" />                                                                                                                                     
+									</cells>
+								</ColumnListItem>
+							</items>
+						</Table>				
+			</content>
+		</Panel>		
+		
 	</VBox>
 </core:FragmentDefinition>

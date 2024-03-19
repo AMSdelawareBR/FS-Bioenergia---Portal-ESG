@@ -24,6 +24,25 @@ sap.ui.define([
 				NewItem: bNewItem
 			};
 			return oQuestion;
-		}
+		},
+
+		/**
+		 * Build Quiz Entity
+		 * @public
+		 * @returns {Object} Object Definition
+		 */
+		buildQuiz: function (bNewItem) {
+			var oQuiz = {
+				Questionario: "",
+				Version: "",
+				Descricao: "",
+				DataInicio: new Date(),
+                DataFim: new Date(),
+				Status: "",
+				_Perguntas: [],
+				NewItem: bNewItem
+			};
+			return oQuiz;
+		}	
     };
 });

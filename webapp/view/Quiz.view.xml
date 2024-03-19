@@ -1,5 +1,5 @@
 <mvc:View controllerName="br.agr.fs.esgsurvey.controller.Quiz" displayBlock="true" xmlns:mvc="sap.ui.core.mvc"
-	xmlns:semantic="sap.m.semantic" xmlns="sap.m" xmlns:tnt="sap.tnt" xmlns:core="sap.ui.core">
+	xmlns:semantic="sap.m.semantic" xmlns="sap.m" xmlns:tnt="sap.tnt" xmlns:core="sap.ui.core" xmlns:dnd="sap.ui.core.dnd">
 	<semantic:DetailPage id="page" title="{i18n>quizzes}" showFooter="false">
 		<semantic:content>
             <Table id="idQuizTable"
@@ -11,7 +11,8 @@
                 <OverflowToolbar>
                     <content>
                         <ToolbarSpacer />
-                        <Button text="Criar" press="onQuizCreate"/>
+                        <SearchField id="questionSearch" width="auto" search="onFilterQuizzes" />                        
+                        <Button text="{i18n>create}" press="onQuizCreate"/>
                     </content>
                 </OverflowToolbar>
             </headerToolbar>
@@ -34,9 +35,29 @@
                     demandPopin="true">
                     <Text text="Status" />
                 </Column>
-            </columns>
+                <Column
+                    minScreenWidth="Desktop"
+                    demandPopin="true">
+                    <Text text="{i18n>createdOn}" />
+                </Column>                
+                <Column
+                    minScreenWidth="Desktop"
+                    demandPopin="true">
+                    <Text text="{i18n>createdBy}" />
+                </Column>                      
+                <Column
+                    minScreenWidth="Desktop"
+                    demandPopin="true">
+                    <Text text="{i18n>changedOn}" />
+                </Column>                
+                <Column
+                    minScreenWidth="Desktop"
+                    demandPopin="true">
+                    <Text text="{i18n>changedBy}" />
+                </Column>                                               
+            </columns>         
             <items>
-                <ColumnListItem vAlign="Middle">
+                <ColumnListItem vAlign="Middle"  type="Active" press="onQuizPress">
                     <cells>
                         <Text
                             text="{Version}" />                    
@@ -50,6 +71,28 @@
                                    path: 'Status',
                                    formatter: '.formatter.questionStatusText'
                                   }" />
+                        <Text
+                            text="{
+                                   path: 'CreatedAt',
+                                   type: 'sap.ui.model.type.Date',
+                                   formatOptions: { pattern: 'dd/MM/yyyy', UTC: true }
+                                  }" />
+                        <Text
+                            text="{
+                                   path: 'CreatedBy',
+                                   formatter: '.formatter.questionStatusText'
+                                  }" />
+                        <Text
+                            text="{
+                                   path: 'ChangedAt',
+                                   type: 'sap.ui.model.type.Date',
+                                   formatOptions: { pattern: 'dd/MM/yyyy', UTC: true }
+                                  }" />
+                        <Text
+                            text="{
+                                   path: 'ChangedBy',
+                                   formatter: '.formatter.questionStatusText'
+                                  }" />                                                    
                     </cells>
                 </ColumnListItem>
             </items>

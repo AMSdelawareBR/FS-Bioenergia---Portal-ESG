@@ -28,7 +28,7 @@ sap.ui.define([
 		 * @private
 		 */
 		_onDetailMatched: function(oEvent) {
-			this._initializeQuizItemData({}, true);
+			this._initializeQuestionItemData({}, true);
 			let sQuestionId = oEvent.getParameter("arguments").questionId;
 
 			this.getModel("questionView").setData({
@@ -53,14 +53,14 @@ sap.ui.define([
 						$expand: "to_Aprovadores,to_Responsa"
 					},
 					success: function (oQuestionData) {
-						debugger
+						
 						this.setAppBusy(false);
 						this._initializeQuestionEdit(oQuestionData)
 					}.bind(this),
 					error: function (oError) {}
 				});				
 			}else{
-				this._initializeQuizItemData({}, true);
+				this._initializeQuestionItemData({}, true);
 				this._showFormFragment("QuestionItemEdit");
 
 				// Inputs
@@ -74,8 +74,8 @@ sap.ui.define([
 		},
 
 		_initializeQuestionEdit: function(oQuestionData){
-			debugger
-			this._initializeQuizItemData(oQuestionData, false);
+			
+			this._initializeQuestionItemData(oQuestionData, false);
 			this._showFormFragment("QuestionItemEdit");
 
 			var fnValidator = function(args){
@@ -100,7 +100,7 @@ sap.ui.define([
 		 * @param {JSONObject} oQuestionItem Question Data
 		 * @private
 		 */
-		_initializeQuizItemData: function (oQuestionItem, bNewQuestion) {
+		_initializeQuestionItemData: function (oQuestionItem, bNewQuestion) {
 			// Base Build			
 			var oQuestionItemBase = {}
 
@@ -140,7 +140,7 @@ sap.ui.define([
 		 * @returns {sap.ui.core.FragmentDefinition} The Fragment Definition
 		 */		
 		onSaveQuestionItem: function(oEvent){
-			debugger			
+						
 			// Inputs
 			let aResponsibles = this.getView().byId("responsibleinput").getTokens();
 			let aApprovers = this.getView().byId("approversinput").getTokens();			
@@ -165,7 +165,7 @@ sap.ui.define([
 				}))
 			}
 
-			debugger
+			
 			this.setAppBusy(true)
 			this.getModel().create("/ZC_GEN_PERGUNTAS", questionData, {
 				success: function (oData) {
@@ -174,7 +174,7 @@ sap.ui.define([
 					this.getRouter().navTo("question");					
 				}.bind(this),
 				error: function (oError) {
-					debugger
+					
 					this.setAppBusy(false);
 					/*
 					sap.m.MessageBox.error(this.getResourceBundle().getText("notificationError"));
@@ -183,8 +183,8 @@ sap.ui.define([
 			});
 		},
 
-				/**
-		 * Initialize Notification
+		/**
+		 * Move Corresponding
 		 * @param {String} sEntityName Entity Name
 		 * @param {JSONObject} oBaseFrom Object Base
 		 * @param {JSONObject} oBaseTo Object Destiny

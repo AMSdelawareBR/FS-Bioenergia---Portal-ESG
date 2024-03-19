@@ -1,5 +1,5 @@
 <mvc:View controllerName="br.agr.fs.esgsurvey.controller.Master" displayBlock="true" xmlns:mvc="sap.ui.core.mvc"
-	xmlns:semantic="sap.m.semantic" xmlns="sap.m" xmlns:tnt="sap.tnt">
+	xmlns:semantic="sap.m.semantic" xmlns="sap.m" xmlns:tnt="sap.tnt" xmlns:dnd="sap.ui.core.dnd">
 	<semantic:MasterPage id="page" title="{masterView>/title}" showFooter="false">
 		<semantic:content>
 			<tnt:NavigationList
@@ -9,8 +9,10 @@
 					<tnt:NavigationListItem text="{i18n>quizzes}" key="quizRootItem" icon="sap-icon://question-mark" items="{ path: '/ZC_GEN_QUESTIONARIO', parameters:{expand : 'to_Perguntas'}}" select="handleSelectNavigationListItemQuizRoot">
 						<tnt:NavigationListItem key="{Questionario}#{Version}" text="{Descricao}" select="handleSelectNavigationListItemQuizItem"/>
 					</tnt:NavigationListItem>
-					<tnt:NavigationListItem text="{i18n>questions}" key="questionRootItem" icon="sap-icon://approvals" items="{ path: '/ZC_GEN_PERGUNTAS', parameters:{expand : 'to_Responsa'}}" select="handleSelectNavigationListItemQuestionRoot">
-						<tnt:NavigationListItem key="{Pergunta}" text="{Descricao}" select="handleSelectNavigationListItemQuestionItem"/>
+					<tnt:NavigationListItem text="{i18n>questions}" key="questionRootItem" icon="sap-icon://approvals" items="{ path: '/ZC_GEN_PERGUNTAS', parameters:{expand : 'to_Responsa'}}" select="handleSelectNavigationListItemQuestionRoot">				
+						<tnt:items>
+							<tnt:NavigationListItem key="{Pergunta}" text="{Descricao}" select="handleSelectNavigationListItemQuestionItem"/>
+						</tnt:items>
 					</tnt:NavigationListItem>
 				</tnt:NavigationList>
 		</semantic:content>

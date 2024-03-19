@@ -39,7 +39,7 @@
 				</Select>		
 				<Label text="{i18n>dateRange}" />		
 				<DateRangeSelection
-					id="quizdaterange"
+					id="questiondaterange"
 					value= "{
 						'type': 'sap.ui.model.type.DateInterval',
 						'formatOptions': {
