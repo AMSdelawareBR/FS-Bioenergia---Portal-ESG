@@ -37,7 +37,8 @@ sap.ui.define([
 			let sQuizVersion = oEvent.getParameter("arguments").quizVersion;
 
 			this.getModel("quizView").setData({
-				edit: true
+				edit: true,
+				newItem: sQuizId === "NEW"
 			})
 			this.getModel("quizView").refresh(true)	
 
@@ -52,10 +53,9 @@ sap.ui.define([
 					urlParameters: {
 						$expand: "to_Perguntas,to_Perguntas/to_Pergunta"
 					},
-					success: function (oQuizData) {
-						
+					success: function (oQuizData) {						
 						this.setAppBusy(false);
-						//this._initializeQuestionEdit(oQuestionData)
+						this._initializeQuizEdit(oQuizData)
 					}.bind(this),
 					error: function (oError) {}
 				});				
@@ -63,6 +63,11 @@ sap.ui.define([
 				this._initializeQuizItemData({}, true);
 				this._showFormFragment("QuizItemEdit");			
 			}	
+		},
+
+		_initializeQuizEdit: function(oQuizData){			
+			this._initializeQuizItemData(oQuizData, false);
+			this._showFormFragment("QuizItemEdit");
 		},
 
 		/**
@@ -77,17 +82,53 @@ sap.ui.define([
 			// Info Parsing
 			if (!bNewQuiz){				
 				oQuizItemBase = Entity.buildQuiz(bNewQuiz);
-				this._moveCorrespondingAttributes("ZC_GEN_QUESTIONARIO", oQuizItem, oQuizItemBase); // Solicitation				
+				this._moveCorrespondingAttributes("ZC_GEN_QUESTIONARIOType", oQuizItem, oQuizItemBase); // Questionário				
+				this._moveCorrespondingAttributes("ZC_GEN_PERGUNTASType", oQuizItem.to_Perguntas.results, oQuizItemBase._Perguntas); // Perguntas
 			}else{
 				oQuizItemBase = Entity.buildQuiz(bNewQuiz);
 			}
 
 			// Model
-			this.getModel("questionEdit").setData(
+			this.getModel("quizEdit").setData(
 				oQuizItemBase
 			);			
-			this.getModel("questionEdit").refresh(true)
+			this.getModel("quizEdit").refresh(true)
 		},		
+
+		/**
+		 * Handle Quiz Saving
+		 * @param {JSONObject} oEvent Event Data
+		 * @public
+		 */
+		onSaveQuizItem: function(oEvent){
+			// Model 
+			let quizEdit = this.getModel("quizEdit").getData()
+
+			// OData Creation
+			let quizData = {
+				Questionario: quizEdit.Questionario,
+				Version: quizEdit.Version,
+				Descricao: quizEdit.Descricao,
+				DataInicio: quizEdit.DataInicio,
+				DataFim: quizEdit.DataFim,
+				Status: quizEdit.Status,
+				to_Perguntas: quizEdit._Perguntas.map(question => ({
+					Pergunta: question.Pergunta
+				}))
+			}
+		
+			this.setAppBusy(true)
+			this.getModel().create("/ZC_GEN_QUESTIONARIO", quizData, {
+				success: function (oData) {
+					this.setAppBusy(false);
+					MessageToast.show(this.getResourceBundle().getText("quizCreateSuccess"));
+					this.getRouter().navTo("quiz");					
+				}.bind(this),
+				error: function (oError) {				
+					this.setAppBusy(false);
+				}.bind(this)
+			});
+		},
 
 		/**
 		 * Handle Question Add
@@ -142,12 +183,12 @@ sap.ui.define([
 				aQuestions = aContexts.map((context) => context.getObject() )
 			} 
 
-			let questionEdit =  this.getModel("questionEdit").getData()
-			questionEdit._Perguntas = []			
-			this._moveCorrespondingAttributes("ZC_GEN_PERGUNTASType", aQuestions, questionEdit._Perguntas); // Solicitation
+			let quizEdit =  this.getModel("quizEdit").getData()
+			quizEdit._Perguntas = []			
+			this._moveCorrespondingAttributes("ZC_GEN_PERGUNTASType", aQuestions, quizEdit._Perguntas); // Solicitation
 			oEvent.getSource().getBinding("items").filter([]);		
-			this.getModel("questionEdit").setData(questionEdit)
-			this.getModel("questionEdit").refresh(true)			
+			this.getModel("quizEdit").setData(quizEdit)
+			this.getModel("quizEdit").refresh(true)			
 		},
 
 		/**

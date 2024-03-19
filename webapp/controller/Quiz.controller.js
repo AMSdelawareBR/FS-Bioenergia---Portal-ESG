@@ -48,6 +48,22 @@ sap.ui.define([
 		},
 
 		/**
+		 * Quiz Selection
+		 * @param {Event} oEvent Event Data
+		 * @private
+		 */		
+		onQuizPress: function(oEvent){
+			let item = oEvent.getSource()
+			let bindingContext = item.getBindingContext()
+			let quiz = bindingContext.getObject().Questionario
+			let version = bindingContext.getObject().Version
+			this.getRouter().navTo("quizItem", {
+				quizId: quiz,
+				quizVersion: version
+			});					
+		},
+
+		/**
 		 * Question Creation Event
 		 * @param {Event} oEvent Event Data
 		 * @private
